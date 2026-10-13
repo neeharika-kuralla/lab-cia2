@@ -1,9 +1,10 @@
 pipeline{
     agent any
-    stages{
-        tools{
+    tools{
             maven 'maven'
         }
+    stages{
+        
         stage("Build and Test"){
             steps{
                 bat 'mvn clean test'
