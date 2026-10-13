@@ -1,8 +1,12 @@
 package com.university;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RegistrationService {
 
     private static final int MAX_CREDITS = 20;
+    private final List<String> auditLog = new ArrayList<>();
 
     public boolean register(Student student, Course course) {
 
@@ -10,7 +14,7 @@ public class RegistrationService {
             return false;
         }
 
-        if (course.getCurrentEnrollment() > course.getCapacity()) {
+        if (course.getCurrentEnrollment() >= course.getCapacity()) {
             return false;
         }
 
@@ -35,7 +39,14 @@ public class RegistrationService {
                 course.getCredits());
 
         course.incrementEnrollment();
+        String entry = "Student ID=" + student.getStudentId()
+                + ", Course Code=" + course.getCourseCode();
+
+        auditLog.add(entry);
 
         return true;
     }
+    public List<String> getAuditLog() {
+    return Collections.unmodifiableList(auditLog);
+}
 }
